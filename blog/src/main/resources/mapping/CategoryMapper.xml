@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blog.dao.CategoryMapper">
+    <select id="getAllCategory" resultType="com.blog.bean.Category">
+        select *
+        from t_category
+        order by create_time desc
+    </select>
+
+    <select id="check" resultType="java.lang.Integer">
+        select count(*)
+        from t_category
+        where cate_name=#{cateName}
+    </select>
+
+    <insert id="addCategory">
+        insert into t_category(cate_name,create_time)
+        value (#{cateName}, now())
+    </insert>
+
+    <update id="updateCategory">
+        update t_category
+        set cate_name=#{cateName},create_time = now()
+    </update>
+
+    <delete id="deleteCategory">
+        delete from t_category
+        where id in
+        <foreach collection="ids" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

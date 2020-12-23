@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.simple.qa.mapper.QuestionsMapper" >
+  <resultMap id="BaseResultMap" type="com.simple.qa.po.Questions" >
+    <id column="q_id" property="qId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="q_desc" property="qDesc" jdbcType="VARCHAR" />
+    <result column="q_time" property="qTime" jdbcType="TIMESTAMP" />
+    <result column="a_num" property="aNum" jdbcType="INTEGER" />
+    <result column="label" property="label" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    q_id, title, q_desc, q_time, a_num, label
+  </sql>
+
+  <select id="findQuestionsByPage" resultMap="BaseResultMap">
+    select *
+    from questions
+    order by q_time
+    limit #{currentRecord}, #{pageSize}
+  </select>
+
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.simple.qa.po.QuestionsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from questions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from questions
+    where q_id = #{qId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from questions
+    where q_id = #{qId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.simple.qa.po.QuestionsExample" >
+    delete from questions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.simple.qa.po.Questions" >
+    insert into questions (q_id, title, q_desc, 
+      q_time, a_num, label
+      )
+    values (#{qId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{qDesc,jdbcType=VARCHAR}, 
+      #{qTime,jdbcType=TIMESTAMP}, #{aNum,jdbcType=INTEGER}, #{label,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.simple.qa.po.Questions" >
+    insert into questions
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qId != null" >
+        q_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="qDesc != null" >
+        q_desc,
+      </if>
+      <if test="qTime != null" >
+        q_time,
+      </if>
+      <if test="aNum != null" >
+        a_num,
+      </if>
+      <if test="label != null" >
+        label,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qId != null" >
+        #{qId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="qDesc != null" >
+        #{qDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="qTime != null" >
+        #{qTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aNum != null" >
+        #{aNum,jdbcType=INTEGER},
+      </if>
+      <if test="label != null" >
+        #{label,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.simple.qa.po.QuestionsExample" resultType="java.lang.Integer" >
+    select count(*) from questions
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update questions
+    <set >
+      <if test="record.qId != null" >
+        q_id = #{record.qId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qDesc != null" >
+        q_desc = #{record.qDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qTime != null" >
+        q_time = #{record.qTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.aNum != null" >
+        a_num = #{record.aNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.label != null" >
+        label = #{record.label,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update questions
+    set q_id = #{record.qId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      q_desc = #{record.qDesc,jdbcType=VARCHAR},
+      q_time = #{record.qTime,jdbcType=TIMESTAMP},
+      a_num = #{record.aNum,jdbcType=INTEGER},
+      label = #{record.label,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simple.qa.po.Questions" >
+    update questions
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="qDesc != null" >
+        q_desc = #{qDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="qTime != null" >
+        q_time = #{qTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="aNum != null" >
+        a_num = #{aNum,jdbcType=INTEGER},
+      </if>
+      <if test="label != null" >
+        label = #{label,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where q_id = #{qId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simple.qa.po.Questions" >
+    update questions
+    set title = #{title,jdbcType=VARCHAR},
+      q_desc = #{qDesc,jdbcType=VARCHAR},
+      q_time = #{qTime,jdbcType=TIMESTAMP},
+      a_num = #{aNum,jdbcType=INTEGER},
+      label = #{label,jdbcType=VARCHAR}
+    where q_id = #{qId,jdbcType=INTEGER}
+  </update>
+</mapper>

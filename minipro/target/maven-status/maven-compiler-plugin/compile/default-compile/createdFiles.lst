@@ -1,0 +1,7 @@
+com\imooc\minipro\MiniproApplication.class
+com\imooc\minipro\service\AreaService.class
+com\imooc\minipro\controller\AreaController.class
+com\imooc\minipro\entity\Area.class
+com\imooc\minipro\dao\AreaMapper.class
+com\imooc\minipro\util\ResponseResult.class
+com\imooc\minipro\service\impl\AreaServiceImpl.class
