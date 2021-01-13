@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vblog.dao.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.vblog.entity.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="nickname" property="nickname"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="userface" property="userface"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="enabled" property="enabled"/>
+        <collection property="roles" ofType="com.vblog.entity.Role">
+            <id column="rid" property="id"/>
+            <result column="rname" property="roleName"/>
+        </collection>
+    </resultMap>
+
+    <select id="getUserByNickname" resultMap="BaseResultMap">
+        SELECT u.*, r.id AS rid, r.role_name AS rname
+        FROM t_user u, t_role r, t_role_user ru
+        WHERE u.id=ru.u_id AND r.id=ru.r_id AND u.id NOT IN (SELECT u.id FROM t_user u, t_role_user ru WHERE u.id=ru.u_id AND ru.r_id=1)/*非超管*/
+        <choose>
+            <when test="nickname!=null and nickname!=''">
+                and u.nickname like concat('%',#{nickname},'%') ORDER BY u.id
+            </when>
+            <otherwise>
+                ORDER BY u.id
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getUserById" resultMap="BaseResultMap">
+        SELECT u.*, r.id AS rid, r.role_name AS rname
+        FROM t_user u, t_role r, t_role_user ru
+        WHERE u.id=ru.u_id AND r.id=ru.r_id AND u.id=#{id}
+    </select>
+
+    <select id="loadUserByUsername" resultType="com.vblog.entity.User">
+        select *
+        from t_user
+        where username=#{username}
+    </select>
+
+</mapper>

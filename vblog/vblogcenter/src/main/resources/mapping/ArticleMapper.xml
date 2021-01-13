@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vblog.dao.ArticleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.vblog.entity.Article">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="html_content" property="htmlContent"/>
+        <result column="summary" property="summary"/>
+        <result column="c_id" property="cId"/>
+        <result column="u_id" property="uId"/>
+        <result column="publish_time" property="publishTime"/>
+        <result column="edit_time" property="editTime"/>
+        <result column="state" property="state"/>
+        <result column="page_view" property="pageView"/>
+    </resultMap>
+
+    <select id="getArticleByState" resultType="com.vblog.entity.Article">
+        SELECT a.id, a.u_id, a.title, a.edit_time, a.page_view, a.state, u.nickname, c.cate_name
+        FROM t_article a, t_user u, t_category c
+        WHERE a.c_id=c.id AND a.u_id=u.id
+        <if test="state!=-2">
+            and a.u_id=#{uid}
+        </if>
+        <if test="state!=-1 and state!=-2">
+            and a.state=#{state}
+        </if>
+        <if test="state==-2">/*已发表*/
+            and a.state=1
+        </if>
+        <if test="keywords!=null">
+            AND title LIKE concat('%',#{keywords},'%')
+        </if>
+        ORDER BY a.edit_time DESC limit #{start}, #{count};
+    </select>
+
+    <select id="getArticleCountByState" resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM t_article
+        <where>
+            <if test="state!=-1">
+                AND state=#{state}
+            </if>
+            <if test="uid!=null">
+                AND u_id=#{uid}
+            </if>
+            <if test="keywords!=null">
+                AND title LIKE concat('%',#{keywords},'%')
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteArticleById">
+        DELETE FROM t_article WHERE id IN
+        <foreach collection="aids" item="aid" open="(" close=")" separator=",">
+            #{aid}
+        </foreach>
+    </delete>
+
+    <update id="updateArticleState">
+        UPDATE t_article
+        SET state=#{state} WHERE id IN
+        <foreach collection="aids" item="aid" separator="," open="(" close=")">
+            #{aid}
+        </foreach>
+    </update>
+
+    <update id="updateArticle">
+        UPDATE t_article
+        SET title=#{title},content=#{content},html_content=#{htmlContent},summary=#{summary},c_id=#{cId},edit_time=#{editTime}
+        <if test="state==1">
+            ,state=1
+        </if>
+        <if test="publishTime!=null">
+            ,publish_time=#{publishTime}
+        </if>
+        WHERE id=#{id}
+    </update>
+
+    <update id="pvIncrement">
+        update t_article
+        set page_view = page_view + 1
+        where id = #{id}
+    </update>
+
+    <select id="getCategories" resultType="java.lang.String">
+        select count_date
+        from t_pv
+        where u_id=#{uid}
+        order by count_date limit 7
+    </select>
+
+    <select id="getDataStatistics" resultType="java.lang.Integer">
+        select pv
+        from t_pv
+        where u_id = #{id}
+        order by count_date limit 7
+    </select>
+
+</mapper>
