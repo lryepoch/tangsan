@@ -61,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      *              authenticated()要求在执行该请求时，必须已经登录了应用; permitAll()方法允许请求没有任何的安全限制;
      *
      */
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
