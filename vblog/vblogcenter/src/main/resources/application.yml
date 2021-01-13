@@ -9,8 +9,12 @@ spring:
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-mybatis:
-  type-aliases-package: com.vblog.entity
+mybatis-plus:
   mapper-locations: classpath:/mapping/*Mapper.xml
+  global-config:
+    db-config:
+      #设置实体id自增
+      id-type: auto
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    auto-mapping-behavior: partial
+    map-underscore-to-camel-case: true

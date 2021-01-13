@@ -14,4 +14,12 @@
         where r.id = ru.r_id and ru.u_id = #{uid}
     </select>
 
+    <insert id="addRoles">
+        INSERT INTO t_roles_user(r_id, u_id)
+        VALUES
+        <foreach collection="roles" item="rid" separator=",">
+            (null,#{rid}, #{uid})
+        </foreach>
+    </insert>
+
 </mapper>

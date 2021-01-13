@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,12 +30,14 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService, UserDetailsService {
-    @Resource
-    private UserMapper userMapper;
-    @Resource
-    private RoleUserService roleUserService;
-    @Resource
+    @Autowired
+    UserMapper userMapper;
+    @Autowired
+    RoleUserService roleUserService;
+    @Autowired
     RoleMapper roleMapper;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -97,6 +99,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             list.add(roleUser);
         }
         return roleUserService.saveBatch(list);
+    }
+
+    /**
+     * 0表示成功
+     * 1表示用户名重复
+     * 2表示失败
+     */
+    @Override
+    public int reg(User user) {
+        User loadUserByUsername = userMapper.loadUserByUsername(user.getUsername());
+        if (loadUserByUsername != null) {
+            return 1;
+        }
+        //插入用户，插入之前先对密码进行加密
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //用户可用
+        user.setEnabled(true);
+        int result = userMapper.reg(user);
+        //配置用户的角色，默认都是普通用户
+        String[] roles = new String[]{"2"};
+        int i = roleMapper.addRoles(roles, user.getId());
+        boolean flag = i == roles.length && result == 1;
+        if (flag) {
+            return 0;
+        } else {
+            return 2;
+        }
     }
 
 }

@@ -26,4 +26,6 @@ public interface UserService extends IService<User> {
     int deleteUserById(Integer uid);
 
     boolean updateUserRoles(Integer[] rids, Integer id);
+
+    int reg(User user);
 }

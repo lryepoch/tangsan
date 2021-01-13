@@ -25,7 +25,6 @@ import java.io.PrintWriter;
 
 /**
  * @description 一般会通过自定义配置这三个方法来自定义我们的安全访问策略
- *
  */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -39,28 +38,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.userDetailsService(userService).passwordEncoder(new PasswordEncoder() {
-            //加密
-            @Override
-            public String encode(CharSequence charSequence) {
-                return DigestUtils.md5DigestAsHex(charSequence.toString().getBytes());
-            }
-
-            //密码匹配
-            @Override
-            public boolean matches(CharSequence charSequence, String s) {
-                return s.equals(DigestUtils.md5DigestAsHex(charSequence.toString().getBytes()));
-            }
-        });
+        auth.userDetailsService(userService);
     }
 
     /**
      * @description 具体的权限控制规则配置。一个这个配置相当于xml配置中的一个标签。各种具体的认证机制的相关配置，
-     *                                  OpenIDLoginConfigurer、AnonymousConfigurer、FormLoginConfigurer、HttpBasicConfigurer等;
-     *
-     *              authenticated()要求在执行该请求时，必须已经登录了应用; permitAll()方法允许请求没有任何的安全限制;
-     *
+     * OpenIDLoginConfigurer、AnonymousConfigurer、FormLoginConfigurer、HttpBasicConfigurer等;
+     * <p>
+     * authenticated()要求在执行该请求时，必须已经登录了应用; permitAll()方法允许请求没有任何的安全限制;
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {

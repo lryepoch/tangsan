@@ -21,7 +21,8 @@
     <select id="getUserByNickname" resultMap="BaseResultMap">
         SELECT u.*, r.id AS rid, r.role_name AS rname
         FROM t_user u, t_role r, t_role_user ru
-        WHERE u.id=ru.u_id AND r.id=ru.r_id AND u.id NOT IN (SELECT u.id FROM t_user u, t_role_user ru WHERE u.id=ru.u_id AND ru.r_id=1)/*非超管*/
+        WHERE u.id=ru.u_id AND r.id=ru.r_id AND u.id NOT IN (SELECT u.id FROM t_user u, t_role_user ru WHERE
+        u.id=ru.u_id AND ru.r_id=1)/*非超管*/
         <choose>
             <when test="nickname!=null and nickname!=''">
                 and u.nickname like concat('%',#{nickname},'%') ORDER BY u.id
@@ -44,4 +45,8 @@
         where username=#{username}
     </select>
 
+    <insert id="reg">
+        INSERT INTO t_user
+        set username=#{username},password=#{password},nickname=#{nickname}
+    </insert>
 </mapper>

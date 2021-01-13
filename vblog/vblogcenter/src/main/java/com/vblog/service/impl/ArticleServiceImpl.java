@@ -31,13 +31,11 @@ import java.util.List;
  */
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
-    @Resource
+    @Autowired
     private ArticleMapper articleMapper;
-    @Resource
+    @Autowired
     private TagMapper tagMapper;
-    @Resource
-    private TagService tagService;
-    @Resource
+    @Autowired
     private ArticleTagService articleTagService;
 
     @Override

@@ -1,6 +1,7 @@
 package com.vblog.config;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.util.DigestUtils;
  * @date 2021/1/13 17:27
  * @description TODO 密码xxx
  */
+@Component
 public class MyPasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence rawPassword) {
