@@ -8,6 +8,9 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: GMT+8
 
 mybatis-plus:
   mapper-locations: classpath:/mapping/*Mapper.xml
@@ -18,3 +21,4 @@ mybatis-plus:
   configuration:
     auto-mapping-behavior: partial
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

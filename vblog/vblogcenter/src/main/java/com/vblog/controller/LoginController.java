@@ -4,27 +4,30 @@ package com.vblog.controller;
 import com.vblog.config.RespBean;
 import com.vblog.entity.User;
 import com.vblog.service.UserService;
+import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author lryepoch
- * @date 2021/1/13 12:37
- * @description TODO
- */
+
+@Api(description = "登录操作")
 @RestController
+@Slf4j
 public class LoginController {
     @Autowired
     UserService userService;
 
     @RequestMapping("/login_error")
     public RespBean loginError() {
+        log.info("进入LoginController->loginError()……");
         return new RespBean("error", "登录失败!");
     }
 
     @RequestMapping("/login_success")
     public RespBean loginSuccess() {
+        log.info("进入LoginController->loginSuccess()……");
         return new RespBean("success", "登录成功!");
     }
 
@@ -37,6 +40,7 @@ public class LoginController {
      */
     @RequestMapping("/login_page")
     public RespBean loginPage() {
+        log.info("进入LoginController->loginPage()……");
         return new RespBean("error", "尚未登录，请登录!");
     }
 
@@ -45,8 +49,9 @@ public class LoginController {
      * @author      lryepoch
      * @date        2020/5/5 23:16
      */
-    @RequestMapping("/reg")
+    @PostMapping("/reg")
     public RespBean reg(User user) {
+        log.info("进入LoginController->reg()……");
         int result = userService.reg(user);
         if (result == 0) {
             return new RespBean("success", "注册成功!");

@@ -12,11 +12,11 @@ import java.io.PrintWriter;
 /**
  * @author lryepoch
  * @date 2020/5/29 14:34
- * @description TODO
+ * @description TODO 异常处理
  */
 public class AuthenticationAccessDeniedHandler implements AccessDeniedHandler {
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException {
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();

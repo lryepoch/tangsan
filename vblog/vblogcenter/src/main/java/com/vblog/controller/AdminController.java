@@ -16,12 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author lryepoch
- * @date 2021/1/13 14:06
- * @description TODO
- */
-@Api(description = "超级管理员专属Controller")
+
+@Api(description = "超级管理员操作")
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -32,7 +28,7 @@ public class AdminController {
     @Autowired
     RoleService roleService;
 
-    @ApiOperation(value = "????????")
+    @ApiOperation(value = "分页查看博客")
     @RequestMapping(value = "/article/all", method = RequestMethod.GET)
     public Map<String, Object> getArticleByStateByAdmin(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                                         @RequestParam(value = "count", defaultValue = "5") Integer count,

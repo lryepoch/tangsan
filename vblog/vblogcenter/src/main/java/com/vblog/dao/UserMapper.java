@@ -2,6 +2,7 @@ package com.vblog.dao;
 
 import com.vblog.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface UserMapper extends BaseMapper<User> {
     User loadUserByUsername(String username);
 
     int reg(User user);
+
+    int updateStateById(@Param("email") String email, @Param("id") Integer id);
 }

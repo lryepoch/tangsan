@@ -4,6 +4,7 @@ package com.vblog.controller;
 import com.vblog.config.RespBean;
 import com.vblog.service.UserService;
 import com.vblog.util.SubjectUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.List;
  * @author lryepoch
  * @since 2021-01-13
  */
+@Api(description = "用户操作")
 @RestController
 public class UserController {
     @Autowired
@@ -62,7 +64,7 @@ public class UserController {
     @ApiOperation(value = "开启用户邮箱评论")
     @RequestMapping(value = "/updateUserEmail", method = RequestMethod.PUT)
     public RespBean updateUserEmail(String email) {
-        if (userService.updateUserEmail(email)) {
+        if (userService.updateUserEmail(email) != 0) {
             return new RespBean("success", "开启成功!");
         }
         return new RespBean("error", "开启失败!");

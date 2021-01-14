@@ -49,4 +49,10 @@
         INSERT INTO t_user
         set username=#{username},password=#{password},nickname=#{nickname}
     </insert>
+
+    <update id="updateStateById">
+        update t_user
+        set email = #{email}
+        where id = #{id}
+    </update>
 </mapper>

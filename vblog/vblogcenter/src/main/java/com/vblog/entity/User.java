@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -15,8 +14,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,10 +28,10 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author lryepoch
  * @since 2021-01-13
  */
-@Data
+@Setter
 @EqualsAndHashCode(callSuper = false)
 @TableName("t_user")
-@ApiModel(value = "User对象", description = "")
+@ApiModel(value = "User对象", description = "User对象")
 public class User implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,7 +61,6 @@ public class User implements UserDetails, Serializable {
     private Boolean enabled;
 
     private List<Role> roles;
-
 
     @Override
     @JsonIgnore
@@ -96,4 +94,75 @@ public class User implements UserDetails, Serializable {
     public boolean isEnabled() {
         return enabled;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserface() {
+        return userface;
+    }
+
+    public void setUserface(String userface) {
+        this.userface = userface;
+    }
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
 }

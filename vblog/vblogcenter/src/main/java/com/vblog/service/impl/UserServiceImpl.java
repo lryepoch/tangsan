@@ -54,11 +54,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
 
     @Override
-    public boolean updateUserEmail(String email) {
-        User user = new User();
-        user.setId(SubjectUtil.getCurrentUser().getId());
-        user.setEmail(email);
-        return updateById(user);
+    public int updateUserEmail(String email) {
+        return userMapper.updateStateById(email, SubjectUtil.getCurrentUser().getId());
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.vblog.config;
 
 import com.vblog.service.UserService;
-import com.vblog.service.impl.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,11 +11,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.util.DigestUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,12 +22,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * @description 一般会通过自定义配置这三个方法来自定义我们的安全访问策略
+ * @description spring security配置类。
+ *              一般会通过自定义配置这三个方法来自定义我们的安全访问策略
  */
 @Configuration
+@Slf4j
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     /**
      * @description 配置全局的认证相关的信息，其实就是AuthenticationProvider和UserDetailsService，前者是认证服务提供商，后者是用户详情查询服务；
@@ -38,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        log.info("进入WebSecurityConfig->AuthenticationManagerBuilder……");
         auth.userDetailsService(userService);
     }
 
@@ -49,20 +50,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        log.info("进入WebSecurityConfig->HttpSecurity……");
         http.authorizeRequests()
 
                 //登录后都可以访问/admin/category/all
-                .antMatchers("/admin/category/all").authenticated()
+                .antMatchers("/admin/category/all")
+                .authenticated()
 
                 // /admin/**的URL都需要有超级管理员角色才可以访问，如果使用.hasAuthority()来配置，需要在参数中加上ROLE_，如：.hasAuthority("ROLE_超级管理员")
-                .antMatchers("/admin/**", "/reg").hasRole("超级管理员")
+                .antMatchers("/admin/**", "/reg")
+                .hasRole("超级管理员")
 
                 //其他路径都是登录认证后才可访问
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
 
                 //使用 form 表单进行登录(默认路径为/login)
-                .and().formLogin().loginPage("/login_page")
+                .and()
+                .formLogin()
+                .loginPage("/login_page")
 
                 //自定义认证成功或者失败的返回json
                 .successHandler(new AuthenticationSuccessHandler() {
@@ -85,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         out.flush();
                         out.close();
                     }
-                }).loginProcessingUrl("login")
+                }).loginProcessingUrl("/login")
 
                 .usernameParameter("username")
                 .passwordParameter("password")
@@ -111,8 +117,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * privilegeEvaluator、expressionHandler、securityInterceptor
      */
     @Override
-    public void configure(WebSecurity webSecurity) throws Exception {
-        webSecurity.ignoring().antMatchers("/blogimg/**", "/index.html", "/static/**");
+    public void configure(WebSecurity webSecurity) {
+        log.info("进入WebSecurityConfig->WebSecurity……");
+        webSecurity.ignoring().antMatchers("/blogimg/**", "/index.html", "/static/**",
+                "/swagger-ui.html","/webjars/**","/swagger-resources/**","/v2/**","/u/**","/swagger/**","/doc.html");
     }
 
     /**

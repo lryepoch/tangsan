@@ -29,7 +29,7 @@ import java.util.*;
  * @author lryepoch
  * @since 2021-01-13
  */
-@Api(description = "博客控制器")
+@Api(description = "博客操作")
 @RestController
 @RequestMapping("/article")
 @Slf4j
@@ -127,7 +127,7 @@ public class ArticleController {
     }
 
     @ApiOperation(value = "访问统计")
-    @RequestMapping("/dataStatistics")
+    @GetMapping("/dataStatistics")
     public Map<String, Object> dataStatistics() {
         Map<String, Object> map = new HashMap<>();
         List<String> categories = articleService.getCategories();

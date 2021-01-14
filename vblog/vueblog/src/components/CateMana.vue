@@ -29,7 +29,7 @@
           width="120" align="left">
         </el-table-column>
         <el-table-column
-          prop="date"
+          prop="createTime"
           label="启用时间" align="left">
           <template slot-scope="scope">{{ scope.row.date | formatDate}}</template>
         </el-table-column>
@@ -63,7 +63,7 @@
       addNewCate(){
         this.loading = true;
         var _this = this;
-        postRequest('/admin/category/', {cateName: this.cateName}).then(resp=> {
+        postRequest('/admin/category/add', {cateName: this.cateName}).then(resp=> {
           if (resp.status == 200) {
             var json = resp.data;
             _this.$message({type: json.status, message: json.msg});
@@ -117,7 +117,7 @@
             });
           } else {
             _this.loading = true;
-            putRequest("/admin/category/", {id: row.id, cateName: value}).then(resp=> {
+            putRequest("/admin/category/update", {id: row.id, cateName: value}).then(resp=> {
               var json = resp.data;
               _this.$message({
                 type: json.status,

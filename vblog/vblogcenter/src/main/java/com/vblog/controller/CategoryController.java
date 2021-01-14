@@ -4,6 +4,7 @@ package com.vblog.controller;
 import com.vblog.config.RespBean;
 import com.vblog.entity.Category;
 import com.vblog.service.CategoryService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -23,6 +26,7 @@ import java.util.List;
  * @since 2021-01-13
  * @description 超级管理员专属controller
  */
+@Api(description = "标签操作")
 @RestController
 @RequestMapping("/admin/category")
 public class CategoryController {
@@ -46,7 +50,7 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "新增栏目")
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public RespBean addNewCate(Category category) {
 
         if ("".equals(category.getCateName()) || category.getCateName() == null) {
@@ -62,7 +66,7 @@ public class CategoryController {
     }
 
     @ApiOperation(value = "编辑栏目")
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public RespBean updateCate(Category category) {
         boolean flag = categoryService.updateById(category);
         if (flag) {

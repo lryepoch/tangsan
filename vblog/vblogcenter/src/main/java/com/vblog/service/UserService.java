@@ -2,6 +2,7 @@ package com.vblog.service;
 
 import com.vblog.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
  * @author lryepoch
  * @since 2021-01-13
  */
-public interface UserService extends IService<User> {
+public interface UserService extends IService<User>, UserDetailsService {
 
-    boolean updateUserEmail(String email);
+    int updateUserEmail(String email);
 
     List<User> getUserByNickname(String nickname);
 
