@@ -88,12 +88,13 @@ public class ArticleController {
         return new RespBean("error", "上传失败!");
     }
 
-    @ApiOperation(value = "查看博客列表")
+    @ApiOperation(value = "查看各栏博客列表，0表示草稿箱，1表示已发表，2表示已删除，-1默认表示全部文章")
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Map<String, Object> getArticleByState(@RequestParam(value = "state", defaultValue = "-1") Integer state,
                                                  @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                 @RequestParam(value = "count", defaultValue = "6") Integer count,
+                                                 @RequestParam(value = "count", defaultValue = "5") Integer count,
                                                  String keywords) {
+        //获取用户在当前分栏下的博客数量
         int totalCount = articleService.getArticleCountByState(state, SubjectUtil.getCurrentUser().getId(), keywords);
         List<Article> articles = articleService.getArticleByState(state, page, count, keywords);
         Map<String, Object> map = new HashMap<>();

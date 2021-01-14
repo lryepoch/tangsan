@@ -18,6 +18,8 @@
         </collection>
     </resultMap>
 
+    <!--choose标签是按顺序判断其内部when标签中的test条件出否成立，如果有一个成立，则 choose 结束。
+        当 choose 中所有 when 的条件都不满则时，则执行 otherwise 中的sql。-->
     <select id="getUserByNickname" resultMap="BaseResultMap">
         SELECT u.*, r.id AS rid, r.role_name AS rname
         FROM t_user u, t_role r, t_role_user ru

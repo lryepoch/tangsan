@@ -18,16 +18,19 @@
     </resultMap>
 
     <select id="getArticleByState" resultType="com.vblog.entity.Article">
-        SELECT a.id, a.u_id, a.title, a.edit_time, a.page_view, a.state, u.nickname, c.cate_name
+        SELECT a.id, a.u_id, a.title, a.edit_time, a.page_view, a.state, u.nickname, c.cate_name as cateName
         FROM t_article a, t_user u, t_category c
         WHERE a.c_id=c.id AND a.u_id=u.id
+        <!--该谁谁，非全部人的-->
         <if test="state!=-2">
             and a.u_id=#{uid}
         </if>
+        <!--0表示草稿箱，1表示已发表，2表示已删除-->
         <if test="state!=-1 and state!=-2">
             and a.state=#{state}
         </if>
-        <if test="state==-2">/*已发表*/
+        <!--查询所有人已发表的文章-->
+        <if test="state==-2">
             and a.state=1
         </if>
         <if test="keywords!=null">
@@ -98,5 +101,10 @@
         where u_id = #{id}
         order by count_date limit 7
     </select>
+
+    <insert id="addNewArticle" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_article
+        SET title=#{title},content=#{content},html_content=#{htmlContent},summary=#{summary},c_id=#{cId},u_id=#{uId},publish_time=#{publishTime},edit_time=#{editTime},state=#{state}
+    </insert>
 
 </mapper>

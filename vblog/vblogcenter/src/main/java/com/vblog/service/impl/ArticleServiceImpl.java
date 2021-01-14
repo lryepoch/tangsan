@@ -50,6 +50,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.getArticleCountByState(state, uid, keywords);
     }
 
+    ////0表示草稿箱，1表示已发表，2表示已删除
     @Override
     public int updateArticleState(Integer[] aids, Integer state) {
         if (state == 2) {
@@ -77,7 +78,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             article.setEditTime(timestamp);
             //设置当前用户
             article.setUId(SubjectUtil.getCurrentUser().getId());
-            int i = articleMapper.insert(article);
+            int i = articleMapper.addNewArticle(article);
             //给博客添加标签
             String[] dynamicTags = article.getDynamicTags();
             if (dynamicTags != null && dynamicTags.length > 0) {
@@ -139,6 +140,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Article getArticleById(Integer aid) {
         Article article = articleMapper.selectById(aid);
+        //文章所在页面浏览量加1
         articleMapper.pvIncrement(aid);
         return article;
     }

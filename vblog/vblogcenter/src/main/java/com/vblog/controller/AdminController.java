@@ -28,7 +28,7 @@ public class AdminController {
     @Autowired
     RoleService roleService;
 
-    @ApiOperation(value = "分页查看博客")
+    @ApiOperation(value = "查询所有人的博客列表")
     @RequestMapping(value = "/article/all", method = RequestMethod.GET)
     public Map<String, Object> getArticleByStateByAdmin(@RequestParam(value = "page", defaultValue = "1") Integer page,
                                                         @RequestParam(value = "count", defaultValue = "5") Integer count,
@@ -50,7 +50,7 @@ public class AdminController {
         return new RespBean("error", "删除失败!");
     }
 
-    @ApiOperation(value = "根据昵称查询用户详细信息，包括拥有的角色")
+    @ApiOperation(value = "根据昵称查询用户详细信息，包括拥有的角色，注意：不能查询超管")
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public List<User> getUserByNickname(String nickname) {
         return userService.getUserByNickname(nickname);
@@ -68,16 +68,6 @@ public class AdminController {
         return roleService.list();
     }
 
-    @ApiOperation(value = "更新用户状态")
-    @RequestMapping(value = "/user/enabled", method = RequestMethod.PUT)
-    public RespBean updateUserEnabled(Boolean enabled, Integer uid) {
-        if (userService.updateUserEnabled(enabled, uid)) {
-            return new RespBean("success", "更新成功!");
-        } else {
-            return new RespBean("error", "更新失败!");
-        }
-    }
-
     @ApiOperation(value = "根据id删除用户")
     @RequestMapping(value = "/user/{uid}", method = RequestMethod.DELETE)
     public RespBean deleteUserById(@PathVariable Integer uid) {
@@ -85,6 +75,16 @@ public class AdminController {
             return new RespBean("success", "删除成功!");
         } else {
             return new RespBean("error", "删除失败!");
+        }
+    }
+
+    @ApiOperation(value = "更新用户状态")
+    @RequestMapping(value = "/user/enabled", method = RequestMethod.PUT)
+    public RespBean updateUserEnabled(Boolean enabled, Integer uid) {
+        if (userService.updateUserEnabled(enabled, uid)) {
+            return new RespBean("success", "更新成功!");
+        } else {
+            return new RespBean("error", "更新失败!");
         }
     }
 

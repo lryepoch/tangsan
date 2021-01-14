@@ -32,4 +32,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<String> getCategories(Integer uid);
 
     List<Integer> getDataStatistics(Integer id);
+
+    int addNewArticle(Article article);
 }

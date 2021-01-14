@@ -62,10 +62,14 @@ public class Article implements Serializable {
     private Integer pageView;
 
 
-//    @ApiModelProperty(value = "")
-//    private List<Tag> tags;
 
     @ApiModelProperty(value = "标签")
     private String[] dynamicTags;
+
+    private String nickname;
+    private String cateName;
+
+    private List<Tag> tags;
+    private String stateStr;
 
 }

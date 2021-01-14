@@ -1,7 +1,7 @@
 <template>
   <el-container v-loading="loading" class="post-article">
     <el-header class="header">
-      <el-select v-model="article.cid" placeholder="请选择文章栏目" style="width: 150px;">
+      <el-select v-model="article.cId" placeholder="请选择文章栏目" style="width: 150px;">
         <el-option
           v-for="item in categories"
           :key="item.id"
@@ -32,7 +32,7 @@
     <el-main class="main">
       <div id="editor">
         <mavon-editor style="height: 100%;width: 100%;" ref=md @imgAdd="imgAdd"
-                      @imgDel="imgDel" v-model="article.mdContent"></mavon-editor>
+                      @imgDel="imgDel" v-model="article.content"></mavon-editor>
       </div>
       <div style="display: flex;align-items: center;margin-top: 15px;justify-content: flex-end">
         <el-button @click="cancelEdit" v-if="from!=undefined">放弃修改</el-button>
@@ -95,7 +95,7 @@
         this.$router.go(-1)
       },
       saveBlog(state){
-        if (!(isNotNullORBlank(this.article.title, this.article.mdContent, this.article.cid))) {
+        if (!(isNotNullORBlank(this.article.title, this.article.content, this.article.cId))) {
           this.$message({type: 'error', message: '数据不能为空!'});
           return;
         }
@@ -104,9 +104,9 @@
         postRequest("/article/", {
           id: _this.article.id,
           title: _this.article.title,
-          mdContent: _this.article.mdContent,
+          content: _this.article.content,
           htmlContent: _this.$refs.md.d_render,
-          cid: _this.article.cid,
+          cId: _this.article.cId,
           state: state,
           dynamicTags: _this.article.dynamicTags
         }).then(resp=> {
@@ -179,8 +179,8 @@
           id: '-1',
           dynamicTags: [],
           title: '',
-          mdContent: '',
-          cid: ''
+          content: '',
+          cId: ''
         }
       }
     }

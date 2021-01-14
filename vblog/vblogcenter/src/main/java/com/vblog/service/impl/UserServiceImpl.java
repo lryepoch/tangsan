@@ -79,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public int deleteUserById(Integer uid) {
         return userMapper.deleteById(uid);
+        //还要删除用户角色关系记录
     }
 
     @Override
