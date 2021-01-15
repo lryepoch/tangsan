@@ -2,8 +2,11 @@ package com.vblog.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
 import java.util.Date;
+
 import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,7 +17,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author lryepoch
@@ -23,12 +26,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("t_article")
-@ApiModel(value="Article对象", description="")
+@ApiModel(value = "Article对象", description = "")
 public class Article implements Serializable {
 
-    private static final long serialVersionUID=1L;
+    private static final long serialVersionUID = 1L;
 
-      @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @ApiModelProperty(value = "标题")
@@ -60,7 +63,6 @@ public class Article implements Serializable {
 
     @ApiModelProperty(value = "浏览数")
     private Integer pageView;
-
 
 
     @ApiModelProperty(value = "标签")

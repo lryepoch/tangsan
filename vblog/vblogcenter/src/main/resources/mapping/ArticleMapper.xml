@@ -15,6 +15,12 @@
         <result column="edit_time" property="editTime"/>
         <result column="state" property="state"/>
         <result column="page_view" property="pageView"/>
+        <result column="nickname" property="nickname"/>
+        <result column="cateName" property="cateName"/>
+        <collection property="tags" ofType="com.vblog.entity.Tag" column="tagName">
+            <id property="id" column="tId"/>
+            <result property="tagName" column="tag_name"/>
+        </collection>
     </resultMap>
 
     <select id="getArticleByState" resultType="com.vblog.entity.Article">
@@ -107,4 +113,18 @@
         SET title=#{title},content=#{content},html_content=#{htmlContent},summary=#{summary},c_id=#{cId},u_id=#{uId},publish_time=#{publishTime},edit_time=#{editTime},state=#{state}
     </insert>
 
+    <select id="getArticleById" resultMap="BaseResultMap">
+        select a.*, t.id as tId, t.tag_name, u.nickname, c.cate_name as cateName
+        from t_article a left join t_article_tag tat on a.id = tat.a_id
+                                left join t_tag t on tat.t_id = t.id
+                                left join t_user u on a.u_id = u.id
+                        left join t_category c on a.c_id = c.id
+        where a.id = #{aid}
+    </select>
+
+    <update id="updateArticleStateById">
+        update t_article
+        set state = #{state}
+        where id = #{aid}
+    </update>
 </mapper>

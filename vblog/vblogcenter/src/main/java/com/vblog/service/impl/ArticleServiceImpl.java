@@ -111,9 +111,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     private boolean addTagsToArticle(String[] dynamicTags, Integer aid) {
         //1.删除博客标签关系表数据
-        QueryWrapper<ArticleTag> wrapper = new QueryWrapper<>();
-        wrapper.lambda().eq(ArticleTag::getAId, aid);
-        articleTagService.remove(wrapper);
+        tagMapper.deleteTagsByAid(aid);
         //2.将新增标签存入数据库表
         tagMapper.saveTags(dynamicTags);
         //3.查询这些标签的id
@@ -139,18 +137,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public Article getArticleById(Integer aid) {
-        Article article = articleMapper.selectById(aid);
+        Article article = articleMapper.getArticleById(aid);
         //文章所在页面浏览量加1
         articleMapper.pvIncrement(aid);
         return article;
     }
 
     @Override
-    public boolean restoreArticle(Integer articleId) {
-        Article article = new Article();
-        article.setId(articleId);
-        article.setState(1);
-        return updateById(article);
+    public int restoreArticle(Integer articleId) {
+        return articleMapper.updateArticleStateById(articleId, 1); // 从回收站还原在原处;
     }
 
     /**

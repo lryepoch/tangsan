@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
  *
  * @author lryepoch
  * @since 2021-01-13
- * @description 超级管理员专属controller
+ * @description
  */
 @Api(description = "标签操作")
 @RestController
@@ -57,6 +58,7 @@ public class CategoryController {
             return new RespBean("error", "请输入栏目名称!");
         }
 
+        category.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
         boolean flag = categoryService.save(category);
 
         if (flag) {
@@ -68,6 +70,7 @@ public class CategoryController {
     @ApiOperation(value = "编辑栏目")
     @RequestMapping(value = "/update", method = RequestMethod.PUT)
     public RespBean updateCate(Category category) {
+        category.setCreateTime(Timestamp.valueOf(LocalDateTime.now()));
         boolean flag = categoryService.updateById(category);
         if (flag) {
             return new RespBean("success", "修改成功!");

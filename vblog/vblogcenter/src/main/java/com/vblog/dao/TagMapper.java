@@ -2,6 +2,7 @@ package com.vblog.dao;
 
 import com.vblog.entity.Tag;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,7 +16,9 @@ import java.util.List;
  */
 public interface TagMapper extends BaseMapper<Tag> {
 
-    int saveTags(String[] tags);
+    int saveTags(@Param("tags") String[] tags);
 
-    List<Integer> getTagsIdByTagName(String[] tagNames);
+    List<Integer> getTagsIdByTagName(@Param("tagNames") String[] tagNames);
+
+    int deleteTagsByAid(Integer aid);
 }

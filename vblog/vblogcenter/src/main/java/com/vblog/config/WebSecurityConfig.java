@@ -1,5 +1,7 @@
 package com.vblog.config;
 
+import com.vblog.config.security.WowAuthenticationFailHandler;
+import com.vblog.config.security.WowAuthenticationSuccessHandler;
 import com.vblog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,17 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * @description spring security配置类。
@@ -38,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        log.info("进入WebSecurityConfig->AuthenticationManagerBuilder……");
+        log.info("进入WebSecurityConfig->AuthenticationManagerBuilder……，UserDetailsService 用户名密码校验");
         auth.userDetailsService(userService);
     }
 
@@ -50,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        log.info("进入WebSecurityConfig->HttpSecurity……");
+        log.info("进入WebSecurityConfig->HttpSecurity……，设置具体的权限控制规则");
         http.authorizeRequests()
 
                 //登录后都可以访问/admin/category/all
@@ -68,31 +60,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //使用 form 表单进行登录(默认路径为/login)
                 .and()
                 .formLogin()
+                //指定登陆页面
                 .loginPage("/login_page")
+                //登陆页面提交的页面 开始使用UsernamePasswordAuthenticationFilter过滤器处理请求
+                .loginProcessingUrl("/login")
 
                 //自定义认证成功或者失败的返回json
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                        httpServletResponse.setContentType("application/json;charset=utf-8");
-                        PrintWriter out = httpServletResponse.getWriter();
-                        out.write("{\"status\":\"success\",\"msg\":\"登录成功\"}");
-                        out.flush();
-                        out.close();
-                    }
-                })
+                .successHandler(new WowAuthenticationSuccessHandler())
+                .failureHandler(new WowAuthenticationFailHandler())
 
-                .failureHandler(new AuthenticationFailureHandler() {
-                    @Override
-                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-                        httpServletResponse.setContentType("application/json;charset=utf-8");
-                        PrintWriter out = httpServletResponse.getWriter();
-                        out.write("{\"status\":\"error\",\"msg\":\"登录失败\"}");
-                        out.flush();
-                        out.close();
-                    }
-                }).loginProcessingUrl("/login")
-
+                //自定义登陆用户名和密码参数，默认为username和password
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .permitAll()
@@ -101,11 +78,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .permitAll()
 
-                //关闭csrf防护
+                //关闭跨站请求伪造攻击拦截
                 .and()
                 .csrf()
                 .disable()
 
+                //权限异常
                 .exceptionHandling()
                 .accessDeniedHandler(getAccessDeniedHandler());
 
@@ -118,9 +96,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity webSecurity) {
-        log.info("进入WebSecurityConfig->WebSecurity……");
-        webSecurity.ignoring().antMatchers("/blogimg/**", "/index.html", "/static/**",
-                "/swagger-ui.html","/webjars/**","/swagger-resources/**","/v2/**","/u/**","/swagger/**","/doc.html");
+        log.info("进入WebSecurityConfig->WebSecurity……，设置拦截忽略文件夹，可以对静态资源放行");
+        webSecurity.ignoring().antMatchers("/blogimg/**",
+                                                        "/index.html",
+                                                        "/static/**",
+                                                        "/swagger-ui.html",
+                                                        "/webjars/**",
+                                                        "/swagger-resources/**",
+                                                        "/v2/**",
+                                                        "/u/**",
+                                                        "/swagger/**",
+                                                        "/doc.html");
     }
 
     /**

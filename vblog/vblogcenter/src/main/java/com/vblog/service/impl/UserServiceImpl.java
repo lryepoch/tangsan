@@ -117,8 +117,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         int result = userMapper.reg(user);
         //配置用户的角色，默认都是普通用户
         String[] roles = new String[]{"2"};
-        int i = roleMapper.addRoles(roles, user.getId());
-        boolean flag = i == roles.length && result == 1;
+        int relation = roleMapper.addRoles(roles, user.getId());
+        boolean flag = relation == roles.length && result == 1;
         if (flag) {
             return 0;
         } else {

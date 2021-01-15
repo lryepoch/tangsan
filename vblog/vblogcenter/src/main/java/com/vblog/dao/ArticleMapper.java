@@ -34,4 +34,8 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<Integer> getDataStatistics(Integer id);
 
     int addNewArticle(Article article);
+
+    Article getArticleById(Integer aid);
+
+    int updateArticleStateById(@Param("aid")Integer articleId, @Param("state") int state);
 }

@@ -79,6 +79,7 @@
   import {putRequest} from '../utils/api'
   import {deleteRequest} from '../utils/api'
   export default{
+    /*vue 页面加载时触发的函数 mounted: function ()*/
     mounted: function () {
       this.loading = true;
       this.loadUserList();
@@ -89,6 +90,7 @@
         return false;
       });
     },
+    /*方法*/
     methods: {
       saveRoles(id, index){
         var selRoles = this.roles;
@@ -226,11 +228,12 @@
           }
         });
       },
-      searchClick(){
+      searchClick() {
         this.loading = true;
         this.loadUserList();
       }
     },
+    //Vue 关于data(){return {返回的默认值} }
     data(){
       return {
         loading: false,

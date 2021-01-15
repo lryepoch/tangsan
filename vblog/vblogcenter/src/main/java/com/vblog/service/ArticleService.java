@@ -25,7 +25,7 @@ public interface ArticleService extends IService<Article> {
 
     Article getArticleById(Integer aid);
 
-    boolean restoreArticle(Integer articleId);
+    int restoreArticle(Integer articleId);
 
     List<String> getCategories();
 

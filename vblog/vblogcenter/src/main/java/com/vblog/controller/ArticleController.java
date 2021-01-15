@@ -23,7 +23,7 @@ import java.util.*;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author lryepoch
@@ -37,7 +37,7 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
-    @ApiOperation(value = "写新博客")
+    @ApiOperation(value = "新增或者修改博客")
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public RespBean addNewArticle(Article article) {
         int result = articleService.addNewArticle(article);
@@ -109,7 +109,7 @@ public class ArticleController {
         return articleService.getArticleById(aid);
     }
 
-    @ApiOperation(value = "更新博客状态")
+    @ApiOperation(value = "删除博客")
     @RequestMapping(value = "/dustbin", method = RequestMethod.PUT)
     public RespBean updateArticleState(Integer[] aids, Integer state) {
         if (articleService.updateArticleState(aids, state) == aids.length) {
@@ -118,10 +118,10 @@ public class ArticleController {
         return new RespBean("error", "删除失败!");
     }
 
-    @ApiOperation(value = "还原博客状态")
+    @ApiOperation(value = "还原博客")
     @RequestMapping(value = "/restore", method = RequestMethod.PUT)
     public RespBean restoreArticle(Integer articleId) {
-        if (articleService.restoreArticle(articleId)) {
+        if (articleService.restoreArticle(articleId) != 0) {
             return new RespBean("success", "还原成功!");
         }
         return new RespBean("error", "还原失败!");

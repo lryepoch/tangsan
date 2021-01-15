@@ -24,4 +24,9 @@
             #{tagName}
         </foreach>
     </select>
+
+    <delete id="deleteTagsByAid">
+        delete from t_article_tag
+        where a_id = #{aid}
+    </delete>
 </mapper>
