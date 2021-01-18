@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50716
 File Encoding         : 65001
 
-Date: 2021-01-15 10:14:34
+Date: 2021-01-18 15:57:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,12 +41,12 @@ INSERT INTO `t_article` VALUES ('1', 'aaaaaaa', 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
 INSERT INTO `t_article` VALUES ('2', 'mybatis-plus update更新操作的三种方式', '1.@ 根据id更新\nUser user = new User();\nuser.setUserId(1);\nuser.setAge(29);\n userMapper.updateById(user);\n1\n2\n3\n4\n2.@ 条件构造器作为参数进行更新\n//把名字为rhb的用户年龄更新为18，其他属性不变\nUpdateWrapper<User> updateWrapper = new UpdateWrapper<>();\nupdateWrapper.eq(\"name\",\"rhb\");\nUser user = new User();\nuser.setAge(18);\nuserMapper.update(user, updateWrapper);\n1\n2\n3\n4\n5\n6\n@ 假设只更新一个字段在使用updateWrapper 的构造器中也需要构造一个实体对象,这样比较麻烦。可以使用updateWrapper的set方法\n//只更新一个属性，把名字为rhb的用户年龄更新为18，其他属性不变\nUpdateWrapper<User> updateWrapper = new UpdateWrapper<>();\nupdateWrapper.eq(\"name\",\"rhb\").set(\"age\", 18);\nuserMapper.update(null, updateWrapper);\n1\n2\n3\n4\n3.@ lambda构造器\nLambdaUpdateWrapper<User> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();\nlambdaUpdateWrapper.eq(User::getName, \"rhb\").set(User::getAge, 18);\nInteger rows = userMapper.update(null, lambdaUpdateWrapper);', '<p>1.@ 根据id更新<br />\nUser user = new User();<br />\nuser.setUserId(1);<br />\nuser.setAge(29);<br />\nuserMapper.updateById(user);<br />\n1<br />\n2<br />\n3<br />\n4<br />\n2.@ 条件构造器作为参数进行更新<br />\n//把名字为rhb的用户年龄更新为18，其他属性不变<br />\nUpdateWrapper<User> updateWrapper = new UpdateWrapper&lt;&gt;();<br />\nupdateWrapper.eq(“name”,“rhb”);<br />\nUser user = new User();<br />\nuser.setAge(18);<br />\nuserMapper.update(user, updateWrapper);<br />\n1<br />\n2<br />\n3<br />\n4<br />\n5<br />\n6<br />\n@ 假设只更新一个字段在使用updateWrapper 的构造器中也需要构造一个实体对象,这样比较麻烦。可以使用updateWrapper的set方法<br />\n//只更新一个属性，把名字为rhb的用户年龄更新为18，其他属性不变<br />\nUpdateWrapper<User> updateWrapper = new UpdateWrapper&lt;&gt;();<br />\nupdateWrapper.eq(“name”,“rhb”).set(“age”, 18);<br />\nuserMapper.update(null, updateWrapper);<br />\n1<br />\n2<br />\n3<br />\n4<br />\n3.@ lambda构造器<br />\nLambdaUpdateWrapper<User> lambdaUpdateWrapper = new LambdaUpdateWrapper&lt;&gt;();<br />\nlambdaUpdateWrapper.eq(User::getName, “rhb”).set(User::getAge, 18);<br />\nInteger rows = userMapper.update(null, lambdaUpdateWrapper);</p>\n', '1.@ 根据id更新\nUser user = new User();\nuser.setUserId(', '6', '2', '2021-01-15 08:57:26', '2021-01-15 08:57:26', '1', '3');
 INSERT INTO `t_article` VALUES ('3', 'gggggggg', 'fffffffffffffffffffff', '<p>fffffffffffffffffffff</p>\n', 'fffffffffffffffffffff\n', '4', '1', null, '2021-01-15 09:28:56', '0', '0');
 INSERT INTO `t_article` VALUES ('4', 'gggggggg', 'fffffffffffffffffffff', '<p>fffffffffffffffffffff</p>\n', 'fffffffffffffffffffff\n', '4', '1', '2021-01-15 09:29:00', '2021-01-15 09:29:00', '1', '0');
-INSERT INTO `t_article` VALUES ('5', 'gggggggg', 'fffffffffffffffffffff', '<p>fffffffffffffffffffff</p>\n', 'fffffffffffffffffffff\n', '6', '1', '2021-01-15 10:06:40', '2021-01-15 10:06:40', '1', '2');
+INSERT INTO `t_article` VALUES ('5', 'gggggggg', 'fffffffffffffffffffff', '<p>fffffffffffffffffffff</p>\n', 'fffffffffffffffffffff\n', '6', '1', '2021-01-15 10:06:40', '2021-01-15 10:06:40', '1', '3');
 INSERT INTO `t_article` VALUES ('6', 'gggggggg', 'fffffffffffffffffffff', '<p>fffffffffffffffffffff</p>\n', 'fffffffffffffffffffff\n', '4', '1', '2021-01-15 09:30:43', '2021-01-15 09:30:43', '1', '0');
-INSERT INTO `t_article` VALUES ('7', 'wwww', 'qqqqqqqqqqqqqqqq', '<p>qqqqqqqqqqqqqqqq</p>\n', 'qqqqqqqqqqqqqqqq\n', '4', '1', null, '2021-01-15 09:57:16', '0', '0');
+INSERT INTO `t_article` VALUES ('7', 'wwww', 'qqqqqqqqqqqqqqqq', '<p>qqqqqqqqqqqqqqqq</p>\n', 'qqqqqqqqqqqqqqqq\n', '4', '1', null, '2021-01-15 09:57:16', '0', '1');
 INSERT INTO `t_article` VALUES ('8', 'qqqqqqq', 'wwwwwwwwwwwwwwwww', '<p>wwwwwwwwwwwwwwwww</p>\n', 'wwwwwwwwwwwwwwwww\n', '4', '1', '2021-01-15 10:06:20', '2021-01-15 10:06:20', '1', '1');
 INSERT INTO `t_article` VALUES ('9', 'wwwwww', 'aaaaaaaaaaaaaaa', '<p>aaaaaaaaaaaaaaa</p>\n', 'aaaaaaaaaaaaaaa\n', '4', '1', '2021-01-15 10:05:43', '2021-01-15 10:05:43', '1', '2');
-INSERT INTO `t_article` VALUES ('10', '买书', '\n![微信图片_20210115101012.jpg](http://localhost:8081/blogimg/20210115/38f80e17-d76e-4d4a-8f45-8f073f793d08_微信图片_20210115101012.jpg)', '<p><img src=\"http://localhost:8081/blogimg/20210115/38f80e17-d76e-4d4a-8f45-8f073f793d08_%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210115101012.jpg\" alt=\"微信图片_20210115101012.jpg\" /></p>\n', '\n', '8', '1', '2021-01-15 10:11:13', '2021-01-15 10:11:13', '1', '4');
+INSERT INTO `t_article` VALUES ('10', '买书', '\n![微信图片_20210115101012.jpg](http://localhost:8081/blogimg/20210115/38f80e17-d76e-4d4a-8f45-8f073f793d08_微信图片_20210115101012.jpg)', '<p><img src=\"http://localhost:8081/blogimg/20210115/38f80e17-d76e-4d4a-8f45-8f073f793d08_%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210115101012.jpg\" alt=\"微信图片_20210115101012.jpg\" /></p>\n', '\n', '8', '1', '2021-01-15 10:11:13', '2021-01-15 10:11:13', '1', '5');
 
 -- ----------------------------
 -- Table structure for t_article_tag
@@ -77,7 +77,7 @@ CREATE TABLE `t_category` (
   `cate_name` varchar(100) DEFAULT NULL COMMENT '专栏名称',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_category
@@ -86,6 +86,7 @@ INSERT INTO `t_category` VALUES ('4', 'php', '2021-01-14 17:11:29');
 INSERT INTO `t_category` VALUES ('5', 'python', '2021-01-14 17:11:37');
 INSERT INTO `t_category` VALUES ('6', 'java', '2021-01-14 17:11:42');
 INSERT INTO `t_category` VALUES ('8', 'we', '2021-01-14 19:16:53');
+INSERT INTO `t_category` VALUES ('9', 'vue', '2021-01-15 15:32:57');
 
 -- ----------------------------
 -- Table structure for t_comment
