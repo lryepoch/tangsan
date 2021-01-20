@@ -1,3 +1,16 @@
-1.博客系统后台；
+# 简易博客系统
 
-2.主要考察对于spring security框架的使用；
+##技术选型
+
+####后端技术
+springboot<br>
+spring security<br>
+mybatis plus<br>
+swagger ui<br>
+log4j<br>
+
+####前端技术
+vue<br>
+
+
+
