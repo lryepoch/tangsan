@@ -1,5 +1,6 @@
 server:
   port: 8888
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -7,3 +8,20 @@ spring:
     username: root
     password: 123456
     type: com.alibaba.druid.pool.DruidDataSource
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  server:
+    MaxFileSize: 50MB
+    MaxRequestSize: 50MB
+
+mybatis-plus:
+  type-aliases-package: com.lryepoch.entity
+  mapper-locations: classpath*:/mapping/*Mapper.xml
+  global-config:
+    db-config:
+      id-type: auto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    auto-mapping-behavior: partial
+    map-underscore-to-camel-case: true
