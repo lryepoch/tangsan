@@ -15,13 +15,13 @@ import org.springframework.util.DigestUtils;
 public class MyPasswordEncoder implements PasswordEncoder {
     @Override
     public String encode(CharSequence rawPassword) {
-        log.info("进入MyPasswordEncoder->encode，rawPassword：{}", rawPassword);
+        log.info("进入MyPasswordEncoder->encode()，rawPassword：{}", rawPassword);
         return DigestUtils.md5DigestAsHex(rawPassword.toString().getBytes());
     }
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        log.info("进入MyPasswordEncoder->matches, rawPassword：{} - encodedPassword：{}", rawPassword, encodedPassword);
+        log.info("进入MyPasswordEncoder->matches(), rawPassword：{} - encodedPassword：{}", rawPassword, encodedPassword);
         return encodedPassword.equals(DigestUtils.md5DigestAsHex(rawPassword.toString().getBytes()));
     }
 }

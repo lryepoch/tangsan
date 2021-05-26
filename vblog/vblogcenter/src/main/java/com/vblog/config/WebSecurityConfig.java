@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        log.info("进入WebSecurityConfig->AuthenticationManagerBuilder……，UserDetailsService 用户名密码校验");
+        log.info("进入WebSecurityConfig -> configure(AuthenticationManagerBuilder auth)，获取用户身份, 和从http中拿的用户身份做对比 ");
         auth.userDetailsService(userService);
     }
 
@@ -38,11 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * @description 具体的权限控制规则配置。一个这个配置相当于xml配置中的一个标签。各种具体的认证机制的相关配置，
      * OpenIDLoginConfigurer、AnonymousConfigurer、FormLoginConfigurer、HttpBasicConfigurer等;
      * <p>
-     * authenticated()要求在执行该请求时，必须已经登录了应用; permitAll()方法允许请求没有任何的安全限制;
+     * authenticated()要求在执行该请求时，必须已经登录了应用;
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        log.info("进入WebSecurityConfig->HttpSecurity……，设置具体的权限控制规则");
+        log.info("进入WebSecurityConfig -> configure(HttpSecurity http)，设置具体的权限控制规则");
+
         http.authorizeRequests()
 
                 //登录后都可以访问/admin/category/all
@@ -96,23 +97,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity webSecurity) {
-        log.info("进入WebSecurityConfig->WebSecurity……，设置拦截忽略文件夹，可以对静态资源放行");
-        webSecurity.ignoring().antMatchers("/blogimg/**",
-                                                        "/index.html",
-                                                        "/static/**",
-                                                        "/swagger-ui.html",
-                                                        "/webjars/**",
-                                                        "/swagger-resources/**",
-                                                        "/v2/**",
-                                                        "/u/**",
-                                                        "/swagger/**",
-                                                        "/doc.html");
+        log.info("进入WebSecurityConfig -> configure(WebSecurity webSecurity)，设置拦截忽略文件夹，可以对静态资源放行");
+        webSecurity.ignoring()
+                .antMatchers("/blogimg/**",
+                                        "/index.html",
+                                        "/static/**",
+                                        "/swagger-ui.html",
+                                        "/webjars/**",
+                                        "/swagger-resources/**",
+                                        "/v2/**",
+                                        "/u/**",
+                                        "/swagger/**",
+                                        "/doc.html");
     }
 
     /**
-     * @description 该类用来统一处理 AccessDeniedException 异常,AccessDeniedException 主要是在用户在访问受保护资源时被拒绝而抛出的异常
-     * @author lryepoch
-     * @date 2020/5/27 13:55
+     * 该类用来统一处理 AccessDeniedException 异常，AccessDeniedException 主要是在用户在访问受保护资源时被拒绝而抛出的异常
      */
     @Bean
     AccessDeniedHandler getAccessDeniedHandler() {
