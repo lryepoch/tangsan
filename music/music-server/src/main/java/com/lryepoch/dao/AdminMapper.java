@@ -2,6 +2,7 @@ package com.lryepoch.dao;
 
 import com.lryepoch.entity.Admin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -16,6 +17,6 @@ public interface AdminMapper extends BaseMapper<Admin> {
     /**
      * 验证密码是否正确
      */
-    int verifyPassword(String username, String password);
+    int verifyPassword(@Param("username") String username, @Param("password") String password);
 
 }

@@ -14,13 +14,13 @@
         /*如果所有的表达式都是空值，最终将返回一个空值。使用COALESCE在于大部分包含空值的表达式最终将返回空值。*/
         select COALESCE(SUM(score),0) as score
         from rank
-        where songListId = #{0}
+        where songListId = #{songListId}
     </select>
 
     <select id="selectRankNum" resultType="java.lang.Integer">
         select COALESCE(COUNT(id),0) as num
         from rank
-        where songListId = #{0}
+        where songListId = #{songListId}
     </select>
 
 
