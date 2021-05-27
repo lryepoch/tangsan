@@ -15,7 +15,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 前端控制器
+ * 评论控制器
  * </p>
  *
  * @author lryepoch

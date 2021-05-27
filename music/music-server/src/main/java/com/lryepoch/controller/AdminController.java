@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * <p>
- * 前端控制器
+ * 管理员控制器
  * </p>
  *
  * @author lryepoch

@@ -18,7 +18,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 前端控制器
+ * 普通用户控制器
  * </p>
  *
  * @author lryepoch
@@ -45,6 +45,16 @@ public class ConsumerController {
     public Object userOfId(HttpServletRequest req) {
         String id = req.getParameter("id");
         return consumerService.userOfId(Integer.parseInt(id));
+    }
+
+
+    /**
+    * 删除用户
+    */
+    @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
+    public Object deleteUser(HttpServletRequest req){
+        String id = req.getParameter("id");
+        return consumerService.deleteUser(Integer.parseInt(id));
     }
 
     /**

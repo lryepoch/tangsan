@@ -32,4 +32,6 @@ public interface SongService extends IService<Song> {
     boolean updateSongPic(Song song);
 
     boolean updateSongUrl(Song song);
+
+    boolean deleteSong(int parseInt);
 }

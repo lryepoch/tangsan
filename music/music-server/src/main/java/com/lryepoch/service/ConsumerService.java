@@ -22,4 +22,6 @@ public interface ConsumerService extends IService<Consumer> {
     boolean updateUserMsg(Consumer consumer);
 
     boolean updateUserAvator(Consumer consumer);
+
+    boolean deleteUser(int parseInt);
 }

@@ -55,6 +55,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public boolean deleteComment(int id) {
-        return commentMapper.deleteById(id) > 0 ? true : false;
+        return removeById(id);
     }
 }

@@ -48,4 +48,9 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
     public boolean updateUserAvator(Consumer consumer) {
         return updateById(consumer);
     }
+
+    @Override
+    public boolean deleteUser(int parseInt) {
+        return removeById(parseInt);
+    }
 }

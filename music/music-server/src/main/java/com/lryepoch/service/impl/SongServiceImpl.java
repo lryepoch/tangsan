@@ -47,7 +47,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     @Override
     public List<Song> songOfSingerName(String singerName) {
         QueryWrapper<Song> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", singerName);
+        queryWrapper.like("name", singerName);
         return songMapper.selectList(queryWrapper);
     }
 
@@ -76,5 +76,10 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements So
     @Override
     public boolean updateSongUrl(Song song) {
         return updateById(song);
+    }
+
+    @Override
+    public boolean deleteSong(int parseInt) {
+        return removeById(parseInt);
     }
 }

@@ -17,14 +17,13 @@ import java.util.Date;
 
 /**
  * <p>
- *  前端控制器
+ *  歌曲控制器
  * </p>
  *
  * @author lryepoch
  * @since 2021-05-24
  */
 @RestController
-@RequestMapping("/song")
 public class SongController {
 
     @Autowired
@@ -62,7 +61,7 @@ public class SongController {
     @RequestMapping(value = "/song/singerName/detail", method = RequestMethod.GET)
     public Object songOfSingerName(HttpServletRequest req){
         String name = req.getParameter("name");
-        return songService.songOfSingerName('%'+ name + '%');
+        return songService.songOfSingerName(name);
     }
 
     /**
@@ -72,6 +71,15 @@ public class SongController {
     public Object songOfName(HttpServletRequest req){
         String name = req.getParameter("name").trim();
         return songService.songOfName(name);
+    }
+
+    /**
+    * 删除歌曲
+    */
+    @RequestMapping(value = "/song/delete", method = RequestMethod.GET)
+    public Object deleteSong(HttpServletRequest req){
+        String id = req.getParameter("id");
+        return songService.deleteSong(Integer.parseInt(id));
     }
 
     /**

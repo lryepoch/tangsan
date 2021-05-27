@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+import java.util.Date;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,13 +32,13 @@ public class Singer implements Serializable {
 
     private String name;
 
-    private String sex;
+    private Byte sex;
 
     @ApiModelProperty(value = "图片")
     private String pic;
 
     @ApiModelProperty(value = "生日")
-    private String birth;
+    private Date birth;
 
     @ApiModelProperty(value = "地区")
     private String location;

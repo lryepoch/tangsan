@@ -24,11 +24,19 @@ public class MyPicConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/avatorImages/**")
                 .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/avatorImages/");
 
-        //歌曲以及图片
+        //歌曲图片
         registry.addResourceHandler("/img/songPic/**")
                 .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/songPic/");
         registry.addResourceHandler("/song/**")
                 .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/song/");
+
+        //歌手头像
+        registry.addResourceHandler("/img/singerPic/**")
+                .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/singerPic/");
+
+        //歌单图片
+        registry.addResourceHandler("/img/songListPic/**")
+                .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/songListPic/");
 
     }
 
