@@ -36,7 +36,7 @@ public class Consumer implements Serializable {
     private String password;
 
     @ApiModelProperty(value = "性别")
-    private Boolean sex;
+    private Byte sex;
 
     private String phoneNum;
 

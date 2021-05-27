@@ -13,4 +13,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ConsumerService extends IService<Consumer> {
 
+    Object allUser();
+
+    Object userOfId(int parseInt);
+
+    boolean addUser(Consumer consumer);
+
+    boolean updateUserMsg(Consumer consumer);
+
+    boolean updateUserAvator(Consumer consumer);
 }

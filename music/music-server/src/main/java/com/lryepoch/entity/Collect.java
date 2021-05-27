@@ -33,7 +33,7 @@ public class Collect implements Serializable {
     private Integer userId;
 
     @ApiModelProperty(value = "收藏类型（0歌曲1歌单）")
-    private Boolean type;
+    private Byte type;
 
     @ApiModelProperty(value = "歌曲id")
     private Integer songId;

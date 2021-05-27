@@ -13,4 +13,14 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface RankMapper extends BaseMapper<Rank> {
 
+    /**
+    * 同一歌单总评分
+    */
+    int selectScoreSum(long songListId);
+
+    /**
+    * 同一歌单总评分人数
+    */
+    int selectRankNum(long songListId);
+
 }
