@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -30,35 +32,9 @@ public class ConsumerController {
     @Autowired
     private ConsumerService consumerService;
 
-    /**
-     * 返回所有用户
-     */
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public Object allUser() {
-        return consumerService.allUser();
-    }
 
     /**
-     * 返回指定ID的用户
-     */
-    @RequestMapping(value = "/user/detail", method = RequestMethod.GET)
-    public Object userOfId(HttpServletRequest req) {
-        String id = req.getParameter("id");
-        return consumerService.userOfId(Integer.parseInt(id));
-    }
-
-
-    /**
-    * 删除用户
-    */
-    @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
-    public Object deleteUser(HttpServletRequest req){
-        String id = req.getParameter("id");
-        return consumerService.deleteUser(Integer.parseInt(id));
-    }
-
-    /**
-     * 添加用户
+     * 用户注册
      */
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
     public Object addUser(HttpServletRequest req) {
@@ -117,6 +93,58 @@ public class ConsumerController {
             jsonObject.put("msg", "注册失败");
             return jsonObject;
         }
+    }
+
+    /**
+    * 用户登录
+    */
+    @RequestMapping(value = "/user/login/status", method = RequestMethod.POST)
+    public Object loginStatus(HttpServletRequest req, HttpSession session){
+
+        JSONObject jsonObject = new JSONObject();
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        boolean res = consumerService.veritypasswd(username, password);
+
+        if (res){
+            jsonObject.put("code", 1);
+            jsonObject.put("msg", "登录成功");
+            jsonObject.put("userMsg", consumerService.loginStatus(username));
+            session.setAttribute("username", username);
+            return jsonObject;
+        }else {
+            jsonObject.put("code", 0);
+            jsonObject.put("msg", "用户名或密码错误");
+            return jsonObject;
+        }
+
+    }
+
+    /**
+     * 返回所有用户
+     */
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public List<Consumer> allUser() {
+        return consumerService.allUser();
+    }
+
+    /**
+     * 返回指定ID的用户
+     */
+    @RequestMapping(value = "/user/detail", method = RequestMethod.GET)
+    public List<Consumer> userOfId(HttpServletRequest req) {
+        String id = req.getParameter("id");
+        return consumerService.userOfId(Integer.parseInt(id));
+    }
+
+
+    /**
+    * 删除用户
+    */
+    @RequestMapping(value = "/user/delete", method = RequestMethod.GET)
+    public Object deleteUser(HttpServletRequest req){
+        String id = req.getParameter("id");
+        return consumerService.deleteUser(Integer.parseInt(id));
     }
 
     /**

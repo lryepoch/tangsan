@@ -18,4 +18,9 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <select id="verifyPassword" resultType="java.lang.Integer">
+        select count(*)
+        from consumer
+        where username = #{username} and password = #{password}
+    </select>
 </mapper>

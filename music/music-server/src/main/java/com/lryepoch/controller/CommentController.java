@@ -64,7 +64,6 @@ public class CommentController {
         String song_list_id = req.getParameter("songListId");
         String song_id = req.getParameter("songId");
         String content = req.getParameter("content").trim();
-        String up = req.getParameter("up").trim();
 
         Comment comment = new Comment();
 
@@ -77,7 +76,6 @@ public class CommentController {
         }
         comment.setContent(content);
         comment.setCreateTime(new Date());
-        comment.setUp(Integer.parseInt(up));
         boolean res = commentService.addComment(comment);
         if (res) {
             jsonObject.put("code", 1);

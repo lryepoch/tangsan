@@ -1,5 +1,6 @@
 package com.lryepoch.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lryepoch.entity.Collect;
 import com.lryepoch.dao.CollectMapper;
 import com.lryepoch.service.CollectService;
@@ -33,7 +34,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect> impl
 
     @Override
     public List<Collect> collectionOfUser(int userId) {
-        return collectMapper.selectBatchIds(Collections.singleton(userId));
+        QueryWrapper<Collect> queryWrapper = new QueryWrapper<>();
+        queryWrapper.or().eq("user_id", userId);
+        return list(queryWrapper);
     }
 
     @Override

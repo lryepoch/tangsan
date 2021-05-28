@@ -1,5 +1,6 @@
 package com.lryepoch.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.lryepoch.entity.Consumer;
 import com.lryepoch.dao.ConsumerMapper;
 import com.lryepoch.service.ConsumerService;
@@ -52,5 +53,17 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
     @Override
     public boolean deleteUser(int parseInt) {
         return removeById(parseInt);
+    }
+
+    @Override
+    public boolean veritypasswd(String username, String password) {
+        return consumerMapper.verifyPassword(username, password)>0?true:false;
+    }
+
+    @Override
+    public List<Consumer> loginStatus(String username) {
+        QueryWrapper<Consumer> queryWrapper = new QueryWrapper<>();
+        queryWrapper.or().like("username", username);
+        return list(queryWrapper);
     }
 }

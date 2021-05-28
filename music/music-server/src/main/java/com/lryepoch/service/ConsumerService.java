@@ -3,6 +3,8 @@ package com.lryepoch.service;
 import com.lryepoch.entity.Consumer;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -13,9 +15,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ConsumerService extends IService<Consumer> {
 
-    Object allUser();
+    List<Consumer> allUser();
 
-    Object userOfId(int parseInt);
+    List<Consumer> userOfId(int parseInt);
 
     boolean addUser(Consumer consumer);
 
@@ -24,4 +26,8 @@ public interface ConsumerService extends IService<Consumer> {
     boolean updateUserAvator(Consumer consumer);
 
     boolean deleteUser(int parseInt);
+
+    boolean veritypasswd(String username, String password);
+
+    List<Consumer> loginStatus(String username);
 }
