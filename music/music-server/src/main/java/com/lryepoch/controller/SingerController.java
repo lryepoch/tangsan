@@ -4,7 +4,6 @@ package com.lryepoch.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.lryepoch.entity.Singer;
 import com.lryepoch.service.SingerService;
-import com.lryepoch.service.impl.SingerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -166,7 +165,7 @@ public class SingerController {
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeAvatorPath = "/img/singerPic/"+fileName;
+        String storeAvatorPath = "/img/singerPic/" +fileName;
         try {
             avatorFile.transferTo(dest);
             Singer singer = new Singer();

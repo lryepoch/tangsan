@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author lryepoch
@@ -57,7 +57,7 @@ public class ConsumerServiceImpl extends ServiceImpl<ConsumerMapper, Consumer> i
 
     @Override
     public boolean veritypasswd(String username, String password) {
-        return consumerMapper.verifyPassword(username, password)>0?true:false;
+        return consumerMapper.verifyPassword(username, password) > 0 ? true : false;
     }
 
     @Override

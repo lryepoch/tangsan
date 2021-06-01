@@ -20,6 +20,9 @@ public class MyPicConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // addResourceHandler是指你想在url请求的路径
+        // addResourceLocations是图片存放的真实路径
+
         //用户头像
         registry.addResourceHandler("/avatorImages/**")
                 .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/avatorImages/");
@@ -27,6 +30,7 @@ public class MyPicConfig implements WebMvcConfigurer {
         //歌曲图片
         registry.addResourceHandler("/img/songPic/**")
                 .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/songPic/");
+
         registry.addResourceHandler("/song/**")
                 .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/song/");
 
@@ -35,7 +39,7 @@ public class MyPicConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/singerPic/");
 
         //歌单图片
-        registry.addResourceHandler("/img/songListPic/**")
+        registry.addResourceHandler("/songListPic/**")
                 .addResourceLocations("file:/Users/hongweiyin/Documents/github-workspace/music-website/music-server/img/songListPic/");
 
     }
@@ -43,9 +47,9 @@ public class MyPicConfig implements WebMvcConfigurer {
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
-        //文件最大10M,DataUnit提供5中类型B,KB,MB,GB,TB
+        //文件最大10M，DataUnit提供5种类型B, KB, MB, GB, TB
         factory.setMaxFileSize(DataSize.of(10, DataUnit.MEGABYTES));
-        /// 设置总上传数据总大小10M
+        //设置总上传数据总大小10M
         factory.setMaxRequestSize(DataSize.of(10, DataUnit.MEGABYTES));
         return factory.createMultipartConfig();
     }

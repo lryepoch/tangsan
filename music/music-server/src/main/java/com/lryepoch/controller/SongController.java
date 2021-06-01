@@ -4,7 +4,6 @@ package com.lryepoch.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.lryepoch.entity.Song;
 import com.lryepoch.service.SongService;
-import com.lryepoch.service.impl.SongServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -191,7 +190,7 @@ public class SongController {
         }
 
         File dest = new File(filePath + System.getProperty("file.separator") + fileName);
-        String storeUrlPath = "/img/songPic/"+fileName;
+        String storeUrlPath = "/img/songPic/" +fileName;
         try {
             urlFile.transferTo(dest);
             Song song = new Song();
