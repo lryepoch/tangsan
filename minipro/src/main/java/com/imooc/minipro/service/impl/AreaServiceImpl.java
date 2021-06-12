@@ -26,18 +26,18 @@ public class AreaServiceImpl implements AreaService {
         return areaMapper.queryAreaById(areaId);
     }
 
-    @Transactional(rollbackFor = RuntimeException.class)
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean insertArea(Area area) {
-        if (area.getAreaName()!=null && area.getAreaName().trim().equals("")){
+        if (area.getAreaName() != null && !"".equals(area.getAreaName().trim())) {
             //如果名字合法
             area.setCreateTime(new Date());
             area.setLastEditTime(new Date());
 
             int enabled = areaMapper.insertArea(area);
-            if (enabled == 1){
+            if (enabled == 1) {
                 return true;
-            }else {
+            } else {
                 throw new RuntimeException("插入区域信息错误");
             }
         }
@@ -45,12 +45,13 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateArea(Area area) {
-        if (area.getAreaId()!=null && area.getAreaId()>0){
+        if (area.getAreaId() != null && area.getAreaId() > 0) {
             int enabled = areaMapper.updateArea(area);
-            if (enabled == 1){
+            if (enabled == 1) {
                 return true;
-            }else {
+            } else {
                 throw new RuntimeException("插入区域信息错误");
             }
         }
@@ -58,6 +59,7 @@ public class AreaServiceImpl implements AreaService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteArea(int areaId) {
         if (areaId > 0) {
             int enabled = areaMapper.deleteArea(areaId);

@@ -19,6 +19,9 @@ public class AreaController {
     @Autowired
     private AreaService areaService;
 
+    /**
+    * 查询全部
+    */
     @RequestMapping(value = "listArea",method = RequestMethod.GET)
     public Map<String, Object> listArea(){
         Map<String, Object> modelMap = new HashMap<>();
@@ -27,6 +30,9 @@ public class AreaController {
         return modelMap;
     }
 
+    /**
+    * 根据id查询
+    */
     @RequestMapping(value = "queryAreaById",method = RequestMethod.GET)
     public Map<String, Object> queryAreaById(int areaId){
         Map<String, Object> modelMap = new HashMap<>();
@@ -35,6 +41,9 @@ public class AreaController {
         return modelMap;
     }
 
+    /**
+    * 增加
+    */
     @RequestMapping(value = "insertArea", method = RequestMethod.POST)
     public Map<String, Object> insertArea(@RequestBody Area area) {
         Map<String, Object> modelMap = new HashMap<>();
@@ -42,6 +51,9 @@ public class AreaController {
         return modelMap;
     }
 
+    /**
+    * 修改
+    */
     @RequestMapping(value = "updateArea", method = RequestMethod.POST)
     public Map<String, Object> updateArea(@RequestBody Area area) {
         Map<String, Object> modelMap = new HashMap<>();
@@ -49,6 +61,9 @@ public class AreaController {
         return modelMap;
     }
 
+    /**
+    * 删除
+    */
     @RequestMapping(value = "deleteArea", method = RequestMethod.GET)
     public Map<String, Object> deleteArea(int areaId) {
         Map<String, Object> modelMap = new HashMap<>();

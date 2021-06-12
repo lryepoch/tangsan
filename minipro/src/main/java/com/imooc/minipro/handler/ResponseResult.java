@@ -1,4 +1,4 @@
-package com.imooc.minipro.util;
+package com.imooc.minipro.handler;
 
 import lombok.Data;
 
