@@ -3,25 +3,33 @@
         <div class="ms-title">music 后台管理登录</div>
         <div class="ms-login">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
+
                 <el-form-item prop="username">
                     <el-input v-model="ruleForm.username" placeholder="用户名"></el-input>
                 </el-form-item>
+
                 <el-form-item prop="password">
-                    <el-input type="password" v-model="ruleForm.password" placeholder="密码"></el-input>
+                    <el-input type="password" v-model="ruleForm.password" placeholder="密码" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+                    
                 </el-form-item>
+
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm">登录</el-button>
                 </div>
+
+                <p style="font-size:12px;line-height:30px;color:#999;">Tips : 用户名和密码要写数据库里的。</p>
             </el-form>
         </div>
     </div>
 </template>
 
 <script>
-import {mixin} from "../mixins/index";
-import {getLoginStatus} from "../api/index";
+import { mixin } from "../mixins/index";
+import { getLoginStatus } from "../api/index";
+
 export default {
     mixins:[mixin],
+
     data: function(){
         return {
             ruleForm: {
@@ -42,21 +50,26 @@ export default {
         submitForm(){
             // alert("提交");
             let params = new URLSearchParams();
-            params.append("name",this.ruleForm.username);
-            params.append("password",this.ruleForm.password);
+            params.append("name", this.ruleForm.username);
+            params.append("password", this.ruleForm.password);
+            //执行登录API
             getLoginStatus(params)
-                .then((res) =>{
+                .then((res) => {
                     if(res.code == 1) {
+                        this.$router.push('/Info')
                         this.notify("登录成功","success");
                     } else {
                         this.notify("登录失败","error");
                     }
-                });
+                })
+                .catch(err =>{
+                    console.log(err)
+                })
         }
     }
 }
-
 </script>
+
 <style scoped>
 .login-wrap {
     position: relative;
@@ -65,8 +78,9 @@ export default {
     background-position: center;
     background-size: cover;
     width: 100%;
-    height: 100vh;/**此处设置为100%会报错 */
+    height: 100%;/**此处设置为100%会报错  100vh*/
 }
+
 .ms-title {
     position: absolute;
     top: 50%;
@@ -77,6 +91,7 @@ export default {
     font-size: 30px;
     color: #fff;
 }
+
 .ms-login {
     position: absolute;
     left: 50%;
@@ -89,9 +104,11 @@ export default {
     border-radius: 5px;
     background: #fff;
 }
+
 .login-btn {
     text-align: center;
 }
+
 .login-btn button{
     width: 100%;
     height: 36px;
